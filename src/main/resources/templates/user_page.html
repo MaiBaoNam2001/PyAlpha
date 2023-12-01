@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="vn" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Py Alpha | Danh sách chương trình</title>
+  <link rel="stylesheet" th:href="@{/assets/css/normalize.min.css}">
+  <link rel="stylesheet" th:href="@{/assets/css/pagination.min.css}">
+  <link rel="stylesheet" th:href="@{/assets/css/main.css}">
+</head>
+<body>
+<div class="app">
+  <!-- header -->
+  <header class="header">
+    <!-- navigation bar -->
+    <nav class="header__navbar">
+      <div class="header__navbar--logo">
+        <a class="header__navbar--home" href="/"><i class="icon fa-brands fa-python"></i><span
+            class="header__navbar--webtitle">Py Alpha</span></a>
+      </div>
+      <div class="header__navbar--menu">
+        <!-- menu icon -->
+        <div class="menu-button">
+          <button class="menu-icon"
+                  onclick="this.classList.toggle('opened'); this.setAttribute('aria-expanded', this.classList.contains('opened'))"
+                  aria-label="Main Menu">
+            <svg width="40" height="40" viewBox="0 0 100 100">
+              <path class="line line1"
+                    d="M 20,29.000046 H 80.000231 C 80.000231,29.000046 94.498839,28.817352 94.532987,66.711331 94.543142,77.980673 90.966081,81.670246 85.259173,81.668997 79.552261,81.667751 75.000211,74.999942 75.000211,74.999942 L 25.000021,25.000058"/>
+              <path class="line line2" d="M 20,50 H 80"/>
+              <path class="line line3"
+                    d="M 20,70.999954 H 80.000231 C 80.000231,70.999954 94.498839,71.182648 94.532987,33.288669 94.543142,22.019327 90.966081,18.329754 85.259173,18.331003 79.552261,18.332249 75.000211,25.000058 75.000211,25.000058 L 25.000021,74.999942"/>
+            </svg>
+          </button>
+        </div>
+        <ul class="header__navbar--list">
+          <li class="header__navbar--item">
+            <button class="header__navbar--list-item logged-in username"><i
+                class="icon fa-solid fa-user"></i><span
+                th:text="${#authentication.getPrincipal().getUsername()}"></span>
+            </button>
+          <li class="header__navbar--item">
+            <form th:action="@{/logout}" method="post">
+              <button type="submit" class="header__navbar--list-item logged-in logout-btn"
+                      onclick="deleteCookie('PRIMARY_COLOR')"><i
+                  class="icon fa-solid fa-arrow-right-to-bracket"></i>Đăng xuất
+              </button>
+            </form>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+  <!-- main -->
+  <main class="main">
+    <div class="main-nav">
+      <p class="main-nav__nav">
+        <a class="main-nav__home" href="/"><i class="icon fa-solid fa-house"></i>Trang chủ</a>
+      </p>
+    </div>
+    <div class="main__content">
+      <div class="main__list-script">
+        <div class="main__title">
+          <h1 class="main__title-text">Danh sách chương trình</h1>
+          <div class="main__program-list" id="program_list"></div>
+        </div>
+        <div class="main__content--bottom">
+          <div id="pagination"></div>
+        </div>
+      </div>
+    </div>
+  </main>
+  <!-- footer -->
+  <footer class="footer">
+    <div class="footer__content">
+      <div class="footer__content--left">
+        <button onclick="document.getElementById('change_prim_color').style.display='block'"
+                class="accentcolorchanger"
+                style="border: none; color: var(--prim); padding-left: 0; cursor:help;">
+          <span class="footer__content--left-title"><i class="icon fa-brands fa-python"></i>Py Alpha</span>
+        </button>
+        <p class="footer__content--left-desc">Py Alpha là một web portal thực thi các chương trình
+          Python 3.</p>
+      </div>
+      <div class="footer__content--right">
+        <p class="footer__content--right-designer">Gia Bảo Lâm</p>
+        <p class="footer__content--right-company">FPT Smart Cloud</p>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<!-- change prim color modal -->
+<div id="change_prim_color" class="modal" style="display: none;">
+  <div class="modal-content animate">
+    <div class="modal__header">
+      <h2 class="modal__header--title">Thay đổi màu chủ đạo</h2>
+      <i class="modal__close icon fa-solid fa-circle-xmark"
+         onclick="document.getElementById('change_prim_color').style.display='none'"></i>
+    </div>
+    <div class="modal__body">
+      <button onclick="changePrimColor('#ee4d2d')" class="colorbtn btn"
+              style="background-color: #ee4d2d;"></button>
+      <button onclick="changePrimColor('#d11515')" class="colorbtn btn"
+              style="background-color: #d11515;"></button>
+      <button onclick="changePrimColor('#120099')" class="colorbtn btn"
+              style="background-color: #120099;"></button>
+      <button onclick="changePrimColor('#44a211')" class="colorbtn btn"
+              style="background-color: #44a211;"></button>
+      <button onclick="changePrimColor('#c0da44')" class="colorbtn btn"
+              style="background-color: #c0da44;"></button>
+      <button onclick="changePrimColor('#c011b2')" class="colorbtn btn"
+              style="background-color: #c011b2;"></button>
+      <button onclick="changePrimColor('#1198a2')" class="colorbtn btn"
+              style="background-color: #1198a2;"></button>
+      <button onclick="changePrimColor('#444444')" class="colorbtn btn"
+              style="background-color: #444444;"></button>
+      <button onclick="changePrimColor('#168326')" class="colorbtn btn"
+              style="background-color: #168326;"></button>
+      <button onclick="changePrimColor('#ff7f00')" class="colorbtn btn"
+              style="background-color: #ff7f00;"></button>
+      <button onclick="changePrimColor('#a0144f')" class="colorbtn btn"
+              style="background-color: #a0144f;"></button>
+      <button onclick="changePrimColor('#84adea')" class="colorbtn btn"
+              style="background-color: #84adea;"></button>
+      <button onclick="changePrimColor('#6d41a1')" class="colorbtn btn"
+              style="background-color: #6d41a1;"></button>
+      <button onclick="changePrimColor('#045b62')" class="colorbtn btn"
+              style="background-color: #045b62;"></button>
+    </div>
+  </div>
+</div>
+
+<script th:src="@{/assets/js/jquery.min.js}"></script>
+<script th:src="@{/assets/js/pagination.min.js}"></script>
+<script th:src="@{/assets/js/fontawesome.js}" crossorigin="anonymous"></script>
+<script th:src="@{/assets/js/main.js}"></script>
+<script th:src="@{/assets/js/user_page.js}"></script>
+</body>
+</html>
